@@ -1,6 +1,7 @@
 package com.springboot.Ecommerce.controller;
 
 
+import com.springboot.Ecommerce.exceptions.APIException;
 import com.springboot.Ecommerce.exceptions.ResourceNotFoundException;
 import com.springboot.Ecommerce.model.Category;
 import com.springboot.Ecommerce.service.CategoryService;
@@ -35,21 +36,13 @@ public class CategoryController {
 
     @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId){
-        try{
-            return new ResponseEntity<>(categoryService.deleteCategory(categoryId),HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(categoryService.deleteCategory(categoryId),HttpStatus.OK);
     }
 
     @PutMapping("/public/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@RequestBody Category category,@PathVariable Long categoryId){
-        try{
-            Category savedCategory = categoryService.updateCategory(category, categoryId);
-            return new ResponseEntity<>("Category with category Id: " + categoryId + " has been updated", HttpStatus.OK);
-        }catch (ResourceNotFoundException e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
-        }
+        Category savedCategory = categoryService.updateCategory(category, categoryId);
+        return new ResponseEntity<>("Category with category Id: " + categoryId + " has been updated", HttpStatus.OK);
     }
 
 }

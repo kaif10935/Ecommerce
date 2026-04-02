@@ -1,14 +1,11 @@
 package com.springboot.Ecommerce.service;
 
+import com.springboot.Ecommerce.exceptions.APIException;
 import com.springboot.Ecommerce.exceptions.ResourceNotFoundException;
 import com.springboot.Ecommerce.model.Category;
 import com.springboot.Ecommerce.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,11 +17,15 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        List<Category> allCategories = categoryRepository.findAll();
+        if(allCategories.isEmpty()) throw new APIException("No categories till now");
+        return allCategories;
     }
 
     @Override
     public void addCategory(Category category) {
+        Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+        if(savedCategory != null) throw new APIException("Category already exists with this name!!!");
         categoryRepository.save(category);
     }
 
