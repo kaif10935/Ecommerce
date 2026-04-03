@@ -1,5 +1,6 @@
 package com.springboot.Ecommerce.controller;
 
+import com.springboot.Ecommerce.config.AppConstants;
 import com.springboot.Ecommerce.payload.CategoryDTO;
 import com.springboot.Ecommerce.payload.CategoryResponse;
 import com.springboot.Ecommerce.service.CategoryService;
@@ -20,8 +21,11 @@ public class CategoryController {
 
     //@GetMapping("/api/public/categories")
     @RequestMapping(value = "/public/categories",method = RequestMethod.GET)
-    public ResponseEntity<CategoryResponse> getAllCategories(){
-        CategoryResponse categotyResponse =  categoryService.getAllCategories();
+    public ResponseEntity<CategoryResponse> getAllCategories(@RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+                                                             @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+                                                             @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_CATEGORIES_BY, required = false) String sortBy,
+                                                             @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder){
+        CategoryResponse categotyResponse =  categoryService.getAllCategories(pageNumber,pageSize,sortBy,sortOrder);
         return new ResponseEntity<>(categotyResponse,HttpStatus.OK);
     }
 
