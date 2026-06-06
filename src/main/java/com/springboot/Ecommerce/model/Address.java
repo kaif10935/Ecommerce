@@ -42,12 +42,13 @@ public class Address {
     private String country;
 
     @NotBlank
-    @Size(min = 6,message = "pincode should be atleast 2 characters long")
+    @Size(min = 6,message = "pincode should be atleast 6 characters long")
     private String pincode;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "addresses")
-    private List<User> user = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Address(String street, String pincode, String buildingName, String city, String state, String country) {
         this.street = street;

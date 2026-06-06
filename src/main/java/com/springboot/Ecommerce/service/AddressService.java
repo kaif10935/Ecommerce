@@ -1,0 +1,22 @@
+package com.springboot.Ecommerce.service;
+
+import com.springboot.Ecommerce.model.User;
+import com.springboot.Ecommerce.payload.AddressDTO;
+import jakarta.validation.Valid;
+
+import java.util.List;
+
+
+public interface AddressService {
+    AddressDTO createAddress(AddressDTO addressDTO, User user);
+
+    List<AddressDTO> getAddresses();
+
+    AddressDTO getAddress(Long addressId);
+
+    List<AddressDTO> getUserAddress(User user);
+
+    AddressDTO updateAddress(Long addressId, @Valid AddressDTO addressDTO);
+
+    String deleteAddress(Long addressId);
+}
